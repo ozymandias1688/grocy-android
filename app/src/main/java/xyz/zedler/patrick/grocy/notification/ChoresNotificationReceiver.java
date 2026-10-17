@@ -133,7 +133,7 @@ public class ChoresNotificationReceiver extends BroadcastReceiver {
         NOTIFICATIONS.CHORES_CHANNEL,
         notificationIntent
     );
-    NotificationCompat.Builder builder = NotificationCompat.recoverBuilder(
+    NotificationCompat.Builder builder = NotificationCompat.Builder.recoverBuilder(
         context, notification
     );
     builder.addAction(new NotificationCompat.Action.Builder(
