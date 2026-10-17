@@ -145,6 +145,16 @@ public class MainActivity extends AppCompatActivity {
     Bundle bundleInstanceState = getIntent().getBundleExtra(ARGUMENT.INSTANCE_STATE);
     super.onCreate(bundleInstanceState != null ? bundleInstanceState : savedInstanceState);
 
+    // LOCAL NETWORK PERMISSION
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
+      String localNetworkPermission = "android.permission.ACCESS_LOCAL_NETWORK";
+      if (checkSelfPermission(localNetworkPermission)
+          != android.content.pm.PackageManager.PERMISSION_GRANTED
+      ) {
+        requestPermissions(new String[]{localNetworkPermission}, 0);
+      }
+    }
+
     // UTILS
 
     clickUtil = new ClickUtil();
