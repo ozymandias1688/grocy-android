@@ -35,6 +35,7 @@ import androidx.preference.PreferenceManager;
 import xyz.zedler.patrick.grocy.Constants.SETTINGS.NOTIFICATIONS;
 import xyz.zedler.patrick.grocy.Constants.SETTINGS_DEFAULT;
 import xyz.zedler.patrick.grocy.R;
+import java.util.ArrayList;
 import xyz.zedler.patrick.grocy.activity.MainActivity;
 import xyz.zedler.patrick.grocy.helper.DownloadHelper;
 import xyz.zedler.patrick.grocy.model.ChoreEntry;
@@ -125,18 +126,8 @@ public class ChoresNotificationReceiver extends BroadcastReceiver {
 
     boolean trackDateOnly = choreEntry.getTrackDateOnlyBoolean();
     int notificationId = ChoresActionReceiver.getNotificationId(choreEntry.getChoreId());
-    Notification notification = ReminderUtil.getNotification(
-        context,
-        choreEntry.getChoreName(),
-        text,
-        notificationId,
-        NOTIFICATIONS.CHORES_CHANNEL,
-        notificationIntent
-    );
-    NotificationCompat.Builder builder = NotificationCompat.Builder.recoverBuilder(
-        context, notification
-    );
-    builder.addAction(new NotificationCompat.Action.Builder(
+    ArrayList<NotificationCompat.Action> actions = new ArrayList<>();
+    actions.add(new NotificationCompat.Action.Builder(
         R.drawable.ic_round_check_circle,
         context.getString(R.string.action_track_chore_execution),
         PendingIntent.getBroadcast(
@@ -149,7 +140,7 @@ public class ChoresNotificationReceiver extends BroadcastReceiver {
             PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         )
     ).build());
-    builder.addAction(new NotificationCompat.Action.Builder(
+    actions.add(new NotificationCompat.Action.Builder(
         R.drawable.ic_round_skip_next,
         context.getString(R.string.action_skip_next_chore_schedule),
         PendingIntent.getBroadcast(
@@ -162,6 +153,14 @@ public class ChoresNotificationReceiver extends BroadcastReceiver {
             PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         )
     ).build());
-    return builder.build();
+    return ReminderUtil.getNotification(
+        context,
+        choreEntry.getChoreName(),
+        text,
+        notificationId,
+        NOTIFICATIONS.CHORES_CHANNEL,
+        notificationIntent,
+        actions
+    );
   }
 }

@@ -240,6 +240,41 @@ public class ReminderUtil {
       String text,
       int notificationId,
       String channelId,
+      Intent intent,
+      java.util.ArrayList<NotificationCompat.Action> actions
+  ) {
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId);
+    builder
+        .setContentTitle(title)
+        .setAutoCancel(true)
+        .setColor(getColor(context))
+        .setSmallIcon(R.drawable.ic_round_grocy_notification)
+        .setContentIntent(
+            PendingIntent.getActivity(
+                context,
+                notificationId,
+                intent,
+                getPendingIntentFlags()
+            )
+        ).setPriority(NotificationCompat.PRIORITY_DEFAULT);
+    if (text != null) {
+      builder.setContentText(text);
+      builder.setStyle(new NotificationCompat.BigTextStyle().bigText(text));
+    }
+    if (actions != null) {
+      for (NotificationCompat.Action action : actions) {
+        builder.addAction(action);
+      }
+    }
+    return builder.build();
+  }
+
+  public static Notification getNotification(
+      Context context,
+      String title,
+      String text,
+      int notificationId,
+      String channelId,
       Intent intent
   ) {
     NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId);
