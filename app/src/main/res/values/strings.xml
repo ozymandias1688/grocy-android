@@ -280,6 +280,7 @@
   </plurals>
   <string name="msg_recipes_ingredient_fulfillment_info_list">Missing: %1$s | Already on shopping list: %2$s</string>
   <string name="msg_chore_executed">Tracked execution of chore</string>
+  <string name="msg_chore_schedule_skipped">Skipped next chore schedule</string>
   <!-- %1$s is a number, %2$s a quantity unit and %3$s is a product name -->
   <string name="msg_purchased">Purchased %1$s %2$s of %3$s</string>
   <!-- %1$s is a number, %2$s a quantity unit and %3$s is a product name -->
